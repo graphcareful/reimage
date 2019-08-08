@@ -1,0 +1,51 @@
+---
+
+- name: Download emacs 26.2
+  get_url:
+    url: http://reflection.oss.ou.edu/gnu/emacs/emacs-26.2.tar.gz
+    dest: '{{ reborn_cache_dir }}'
+
+- name: Install emacs dependencies [ubuntu]
+  apt:
+    name: ['libc6-dev', 'libjpeg62-dev', 'libncurses5-dev', 'libpng-dev', 'libtiff4-dev', 'libungif4-dev', 'xaw3dg-dev', 'zlib1g-dev', 'libice-dev', 'libsm-dev', 'libx11-dev', 'libxext-dev', 'libxi-dev', 'libxmu-dev', 'libxmuu-dev', 'libxpm-dev', 'libxrandr-dev', 'libxt-dev', 'libxtrap-dev', 'libxtst-dev', 'libxv-dev', 'x-dev', 'xlibs-static-dev']
+    state: latest
+  when: ansible_os_distribution == 'Ubuntu'
+
+- name: Install emacs dependencies [fedora]
+  apt:
+    name: ['glibc-devel', 'libjpeg-turbo', 'ncurses-libs', 'libpng-devel', 'libtiff-devel', 'giflib-devel', 'Xaw3d-devel', 'zlib-devel', 'ice-devel', 'libSM-devel', 'libX11-devel', 'libXext-devel', 'libXi-devel', 'libXmu-devel', 'libXpm-devel', 'libXrandr-devel', 'libXt-devel', 'libXtst-devel', 'libXv-devel', 'libX11-devel']
+    state: latest
+  when: ansible_os_distribution == 'RedHat'
+
+- name: Unarchive emacs
+  unarchive:
+    remote_src=yes
+    src='{{ reborn_cache_dir }}/emacs-26.2'
+    dest='{{ reborn_cache_dir }}'
+    creates='{{ reborn_cache_dir }}/emacs-26.2'
+  register: unarchive
+
+- name: Configure emacs
+  shell: ./configure
+  args:
+    chdir: '{{ reborn_cache_dir }}/emacs-26.2'
+
+- name: Build & Install emacs
+  become: yes
+  become_method: sudo
+  shell: make -j20 install
+  args:
+    chdir: '{{ reborn_cache_dir }}/emacs-26.2'
+
+- name: Install spacemacs
+  git:
+    repo: 'https://github.com/syl20bnr/spacemacs'
+    dest: ~/.emacs.d
+    force: yes
+    version: develop
+
+- name: Copy my personal spacemacs config into ~/.spacemacs
+  copy:
+    force=yes
+    src=spacemacs
+    dest=~/.spacemacs

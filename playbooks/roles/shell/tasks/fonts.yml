@@ -1,0 +1,28 @@
+---
+
+- name: Download Source Code Pro font
+  get_url:
+    url: https://github.com/adobe-fonts/source-code-pro/archive/2.010R-ro/1.030R-it.zip
+    dest: '{{ reborn_cache_dir }}'
+
+- name: Unzip font
+  unarchive:
+    remote_src=no
+    src='{{ reborn_cache_dir }}/{{ font_file }}.zip'
+    dest='{{ reborn_cache_dir }}'
+
+- name: Make fonts cache dir
+  file:
+    state=directory
+    path=~/.fonts
+
+- name: Copy into fonts cache
+  copy:
+    src='{{ reborn_cache_dir }}/{{ font_file }}/'
+    dest=~/.fonts
+
+- name: Reload fonts cache
+  command: fc-cache -f -v
+
+
+      

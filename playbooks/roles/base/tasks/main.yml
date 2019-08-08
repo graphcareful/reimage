@@ -1,0 +1,38 @@
+---
+
+- name: Ensure cache dir is created
+  file:
+    state=directory
+    path='{{ reborn_cache_dir }}'
+
+- name: Ensure workspace dir is created
+  file:
+    state=directory
+    path={{ ansible_env.HOME }}/workspace
+
+- include: mac.yml
+  when: ansible_os_family == 'Darwin'
+
+- include: fedora.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: ubuntu.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Copy ssh_config file -> ~/.ssh/config
+  copy:
+    src='{{ roles_dir }}/base/files/ssh_config'
+    dest={{ ansible_env.HOME }}/.ssh/config
+    mode=0644
+
+- name: Copy create_keys.bash script
+  copy:
+    src='{{ roles_dir }}/base/files/create_keys.bash'
+    dest={{ ansible_env.HOME }}/.ssh/keys
+    mode=0777
+
+- name: Copy create_links.bash script
+  copy:
+    src='{{ roles_dir }}/base/files/create_links.bash'
+    dest={{ ansible_env.HOME }}/.ssh/keys
+    mode=0777

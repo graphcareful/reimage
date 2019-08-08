@@ -1,0 +1,21 @@
+---
+
+- name: Install dependencies (aptitude)
+  become: yes
+  apt:
+    name='{{ item.apt }}'
+    state=installed
+    update_cache=yes
+    cache_valid_time=3600
+    force=yes
+  with_items: '{{ package_dependencies }}'
+  when: ansible_os_family == 'Debian'
+
+- name: Install dependencies (dnf)
+  become: yes
+  become_method: sudo
+  dnf:
+    name='{{ item.dnf }}'
+    state=latest
+  with_items: '{{ package_dependencies }}'
+  when: ansible_os_family == 'RedHat'

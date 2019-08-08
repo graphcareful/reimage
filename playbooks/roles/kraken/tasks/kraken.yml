@@ -1,0 +1,33 @@
+---
+
+- name: Ensure a global workspace directory exists
+  file: dest='{{ workspace_dir }}' state=directory
+
+- git:
+    repo: "git@github.com:RBlafford/levd.git"
+    dest: '{{ kraken_dir }}'
+    version: master
+
+- name: Create build dir
+  file: dest='{{ build_dir }}' state=directory
+
+- name: Build source
+  shell: 'cmake .. && /usr/bin/make -j{{ ansible_processor_vcpus }}'
+  args:
+    chdir: '{{ build_dir }}'
+    creates: '{{ build_dir }}/kraken'
+
+- name: Install levd
+  shell: '/usr/bin/make install'
+  args:
+    chdir: '{{ build_dir }}'
+    creates: '/usr/local/bin/kraken'
+  become: true
+
+- name: Start levd service
+  systemd:
+    name: levd
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  become: true

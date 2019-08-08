@@ -1,0 +1,27 @@
+Host *
+ServerAliveInterval 3
+
+Host callahan
+HostName callahan.akamai.com
+User rblaffor
+DynamicForward 8888
+LocalForward 5222 jabberim.akamai.com:5222
+
+Host callahan-proxy
+Hostname callahan.akamai.com
+User rblaffor
+IdentityFile ~/.ssh/active/current-internal
+DynamicForward 8888
+ControlMaster auto
+ControlPath ~/.ssh/sockets/%r@%h:%p
+
+Host git.source.akamai.com
+HostName git.source.akamai.com
+ProxyCommand socat - SOCKS4A:localhost:%h:%p,socksport=8888
+User rblaffor
+
+Host dcp-ci-1
+Hostname 198.18.133.46
+User root
+HostKeyAlgorithms ssh-dss
+

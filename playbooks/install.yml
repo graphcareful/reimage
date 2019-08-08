@@ -1,0 +1,10 @@
+---
+
+- name: Install Developer Environment
+  hosts: localhost
+  roles:
+    - base
+    - shell
+    - emacs
+    - kraken
+    - spotify
