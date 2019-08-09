@@ -35,3 +35,13 @@
   copy:
     src=perforce
     dest={{ ansible_env.HOME }}/workspace/.perforce
+
+- name: Copy personal public key
+  copy:
+    src=id_rsa.pub
+    dest={{ ansible_env.HOME }}/.ssh/id_rsa.pub
+
+- name: Create authorized_keys file for self
+  copy:
+    src=id_rsa.pub
+    dest={{ ansible_env.HOME }}/.ssh/authorized_keys
