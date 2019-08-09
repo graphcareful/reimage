@@ -1,32 +1,50 @@
 ---
 
-- name: Download emacs 26.2
-  get_url:
-    url: http://reflection.oss.ou.edu/gnu/emacs/emacs-26.2.tar.gz
-    dest: '{{ reborn_cache_dir }}'
-
 - name: Install emacs dependencies [ubuntu]
+  become: yes
+  become_method: sudo
   apt:
-    name: ['libc6-dev', 'libjpeg62-dev', 'libncurses5-dev', 'libpng-dev', 'libtiff4-dev', 'libungif4-dev', 'xaw3dg-dev', 'zlib1g-dev', 'libice-dev', 'libsm-dev', 'libx11-dev', 'libxext-dev', 'libxi-dev', 'libxmu-dev', 'libxmuu-dev', 'libxpm-dev', 'libxrandr-dev', 'libxt-dev', 'libxtrap-dev', 'libxtst-dev', 'libxv-dev', 'x-dev', 'xlibs-static-dev']
+    name: ['libc6-dev', 'libjpeg62-dev', 'libncurses5-dev', 'libpng-dev', 'xaw3dg-dev', 'zlib1g-dev', 'libice-dev', 'libsm-dev', 'libx11-dev', 'libxext-dev', 'libxi-dev', 'libxmu-dev', 'libxmuu-dev', 'libxpm-dev', 'libxrandr-dev', 'libxt-dev', 'libxtst-dev', 'libxv-dev']
     state: latest
-  when: ansible_os_distribution == 'Ubuntu'
+  when: ansible_os_family == 'Debian'
+
+- name: Install emacs dependencies .. continued [ubuntu 18.04]
+  become: yes
+  become_method: sudo
+  apt:
+    name: ['libtiff5-dev']
+    state: latest
+  when: ansible_os_family == 'Debian' and ansible_distribution_version == '18.04'
+
+- name: Install emacs dependencies .. continued [ubuntu 16.04]
+  become: yes
+  become_method: sudo
+  apt:
+    name: ['libtiff4-dev']
+    state: latest
+  when: ansible_os_family == 'Debian' and ansible_distribution_version == '16.04'
 
 - name: Install emacs dependencies [fedora]
   apt:
     name: ['glibc-devel', 'libjpeg-turbo', 'ncurses-libs', 'libpng-devel', 'libtiff-devel', 'giflib-devel', 'Xaw3d-devel', 'zlib-devel', 'ice-devel', 'libSM-devel', 'libX11-devel', 'libXext-devel', 'libXi-devel', 'libXmu-devel', 'libXpm-devel', 'libXrandr-devel', 'libXt-devel', 'libXtst-devel', 'libXv-devel', 'libX11-devel']
     state: latest
-  when: ansible_os_distribution == 'RedHat'
+  when: ansible_os_family == 'RedHat'
+
+- name: Download emacs 26.2
+  get_url:
+    url: http://reflection.oss.ou.edu/gnu/emacs/emacs-26.2.tar.gz
+    dest: '{{ reborn_cache_dir }}'
 
 - name: Unarchive emacs
   unarchive:
     remote_src=yes
-    src='{{ reborn_cache_dir }}/emacs-26.2'
+    src='{{ reborn_cache_dir }}/emacs-26.2.tar.gz'
     dest='{{ reborn_cache_dir }}'
     creates='{{ reborn_cache_dir }}/emacs-26.2'
   register: unarchive
 
 - name: Configure emacs
-  shell: ./configure
+  shell: ./configure --with-gnutls=no
   args:
     chdir: '{{ reborn_cache_dir }}/emacs-26.2'
 

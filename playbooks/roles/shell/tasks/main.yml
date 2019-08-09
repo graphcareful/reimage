@@ -19,7 +19,7 @@
     mode: '0777'
 
 - name: Install oh-my-zsh
-  script: ./{{ reborn_cache_dir }}/install.sh
+  script: "{{ reborn_cache_dir }}/install.sh"
 
 - name: Copy tmux configuration
   copy:
