@@ -2,6 +2,15 @@
 
 - include: fonts.yml
 
+- name: Download oh-my-zsh install script
+  get_url:
+    url: "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+    dest: "{{ reborn_cache_dir }}/install.sh"
+    mode: '0777'
+
+- name: Install oh-my-zsh
+  script: "{{ reborn_cache_dir }}/install.sh"
+
 - name: Copy zshrc configuration
   copy:
     src=zshrc
@@ -11,15 +20,6 @@
   copy:
     src=zshrc.pre-oh-my-zsh
     dest={{ ansible_env.HOME }}/..zshrc.pre-oh-my-zsh
-
-- name: Download oh-my-zsh install script
-  get_url:
-    url: "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
-    dest: "{{ reborn_cache_dir }}/install.sh"
-    mode: '0777'
-
-- name: Install oh-my-zsh
-  script: "{{ reborn_cache_dir }}/install.sh"
 
 - name: Copy tmux configuration
   copy:

@@ -16,25 +16,15 @@
     src='{{ reborn_cache_dir }}/{{ scp_font_file }}.zip'
     dest='{{ reborn_cache_dir }}'
 
-- name: Unzip font [Hasklig]
-  unarchive:
-    remote_src=no
-    src='{{ reborn_cache_dir }}/{{ hasklig_font_file }}.zip'
-    dest='{{ reborn_cache_dir }}'
-
 - name: Make fonts cache dir
   file:
     state=directory
     path=~/.fonts
 
-- name: Copy into fonts cache [Source Code Pro]
-  copy:
-    src='{{ reborn_cache_dir }}/{{ scp_font_file }}/'
-    dest=~/.fonts
-
-- name: Copy into fonts cache [Hasklig]
-  copy:
-    src='{{ reborn_cache_dir }}/{{ hasklig_font_file }}/'
+- name: Unzip font [Hasklig]
+  unarchive:
+    remote_src=no
+    src='{{ reborn_cache_dir }}/{{ hasklig_font_file }}.zip'
     dest=~/.fonts
 
 - name: Reload fonts cache
