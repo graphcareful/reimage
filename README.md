@@ -18,3 +18,6 @@ $ ansible-playbook -i hosts -K playbooks/install.yml
 - emacs/spacemacs
 - kraken x61 driver (if kraken x61 is detected)
 - My personal tmux / emacs and ssh config files
+
+TODO:
+- username in .zshrc must be $USER
