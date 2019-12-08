@@ -12,7 +12,7 @@
   become: yes
   become_method: sudo
   dnf:
-    name: ['glibc-devel', 'libjpeg-turbo', 'ncurses-devel', 'libpng-devel', 'libtiff-devel', 'giflib-devel', 'Xaw3d-devel', 'zlib-devel', 'ice-devel', 'libSM-devel', 'libX11-devel', 'libXext-devel', 'libXi-devel', 'libXmu-devel', 'libXpm-devel', 'libXrandr-devel', 'libXt-devel', 'libXtst-devel', 'libXv-devel', 'ccls']
+    name: ['glibc-devel', 'libjpeg-turbo', 'ncurses-devel', 'libpng-devel', 'libtiff-devel', 'giflib-devel', 'Xaw3d-devel', 'zlib-devel', 'libSM-devel', 'libX11-devel', 'libXext-devel', 'libXi-devel', 'libXmu-devel', 'libXpm-devel', 'libXrandr-devel', 'libXt-devel', 'libXtst-devel', 'libXv-devel', 'ccls']
     state: latest
   when: ansible_os_family == 'RedHat'
 

@@ -5,11 +5,6 @@
     state=directory
     path='{{ reborn_cache_dir }}'
 
-- name: Ensure workspace dir is created
-  file:
-    state=directory
-    path={{ ansible_env.HOME }}/workspace
-
 - include: mac.yml
   when: ansible_os_family == 'Darwin'
 
