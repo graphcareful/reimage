@@ -116,4 +116,4 @@ alias proxy_on="ssh -fN callahan-proxy"
 alias proxy_check="ssh -O check callahan-proxy"
 alias proxy_off="ssh -O exit callahan-proxy"
 
-eval `keychain --eval --agents ssh id_rsa active/current-internal active/current-external active/current-deployed`
+eval `keychain --eval ssh id_rsa active/current-internal active/current-external active/current-deployed`

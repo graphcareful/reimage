@@ -1,20 +1,9 @@
 ---
 
-- name: Download Source Code Pro font
-  get_url:
-    url: '{{ scp_font_url }}'
-    dest: '{{ reborn_cache_dir }}'
-
 - name: Download Hasklig font
   get_url:
     url: '{{ hasklig_font_url }}'
     dest: '{{ reborn_cache_dir }}'
-
-- name: Unzip font [Source Code Pro]
-  unarchive:
-    remote_src=no
-    src='{{ reborn_cache_dir }}/{{ scp_font_file }}.zip'
-    dest='{{ reborn_cache_dir }}'
 
 - file: dest='{{ reborn_cache_dir }}/Hasklig-1.1' state=directory
 
@@ -27,13 +16,12 @@
 - name: Make fonts cache dir
   file:
     state=directory
-    path=~/.fonts
+    path='{{ ansible_env.HOME }}/.fonts'
 
-- name: Unzip font [Hasklig]
-  unarchive:
-    remote_src=no
-    src='{{ reborn_cache_dir }}/{{ hasklig_font_file }}.zip'
-    dest=~/.fonts
+- name: Copy Hasklig font into fonts directory
+  copy:
+    src='{{ reborn_cache_dir }}/Hasklig-1.1/'
+    dest='{{ ansible_env.HOME }}/.fonts'
 
 - name: Reload fonts cache
   command: fc-cache -f -v

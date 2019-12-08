@@ -8,8 +8,7 @@ if [ "$os_version" = "Fedora" ]; then
          python-pip \
          openssl-devel \
          libffi-devel \
-         libselinux-python
-    sudo pip install ansible
+         ansible
 elif [ "$os_version" = "Ubuntu" ]; then
     # TODO: Complete
     sudo apt update
@@ -24,5 +23,5 @@ mkdir $HOME/workspace
 git clone https://github.com/graphcareful/reimage.git $HOME/workspace/reimage
 
 echo "Running bootstrap phase..."
-ansible-playbook -i hosts -K playbooks/install.yml
+cd $HOME/workspace/reimage && ansible-playbook -i hosts -K playbooks/install.yml
 

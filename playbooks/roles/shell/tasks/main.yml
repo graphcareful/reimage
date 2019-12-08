@@ -18,7 +18,7 @@
   when: not p.stat.exists
 
 - name: Copy zshrc configuration
-  copy:
+  template:
     src=zshrc
     dest={{ ansible_env.HOME }}/.zshrc
   when: not p.stat.exists
