@@ -29,14 +29,6 @@
     state: present
   when: ansible_distribution_version == "18.04"
 
-- name: Install docker repository [16.04]
-  become: yes
-  become_method: sudo
-  apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu xenial stable
-    state: present
-  when: ansible_distribution_version == "16.04"
-
 - name: Install docker
   become: yes
   become_method: sudo

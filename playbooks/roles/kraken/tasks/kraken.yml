@@ -1,8 +1,5 @@
 ---
 
-- name: Ensure a global workspace directory exists
-  file: dest='{{ workspace_dir }}' state=directory
-
 - git:
     repo: "git@github.com:RBlafford/levd.git"
     dest: '{{ kraken_dir }}'

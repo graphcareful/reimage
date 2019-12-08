@@ -2,24 +2,26 @@
 
 - include: fonts.yml
 
+- name: Check for .oh-my-zsh existance
+  stat: path={{ ansible_env.HOME }}/.oh-my-zsh
+  register: p
+
 - name: Download oh-my-zsh install script
   get_url:
     url: "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
     dest: "{{ reborn_cache_dir }}/install.sh"
     mode: '0777'
+  when: not p.stat.exists
 
 - name: Install oh-my-zsh
   script: "{{ reborn_cache_dir }}/install.sh"
+  when: not p.stat.exists
 
 - name: Copy zshrc configuration
   copy:
     src=zshrc
     dest={{ ansible_env.HOME }}/.zshrc
-
-- name: Copy oh-my-zsh configuration
-  copy:
-    src=zshrc.pre-oh-my-zsh
-    dest={{ ansible_env.HOME }}/..zshrc.pre-oh-my-zsh
+  when: not p.stat.exists
 
 - name: Copy tmux configuration
   copy:
@@ -40,8 +42,11 @@
   copy:
     src=id_rsa.pub
     dest={{ ansible_env.HOME }}/.ssh/id_rsa.pub
+    force=no
 
 - name: Create authorized_keys file for self
   copy:
     src=id_rsa.pub
     dest={{ ansible_env.HOME }}/.ssh/authorized_keys
+    force=no
+

@@ -9,11 +9,5 @@
   stat: path=/etc/systemd/system/levd.service
   register: service_status
 
-# - debug:
-#     msg: "{{ kraken_usb.stdout }}"
-
-# - debug:
-#     msg: "{{ service_status }}"
-
 - include: kraken.yml
   when: (kraken_usb.stdout == "2433:b200") and (service_status.stat.exists == false)
