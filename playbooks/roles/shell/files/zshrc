@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/robert/.oh-my-zsh"
+export ZSH="/home/{{ lookup(env, 'USER') }}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -115,3 +115,5 @@ alias concord="~/workspace/concord/concord/cli/concord.pex"
 alias proxy_on="ssh -fN callahan-proxy"
 alias proxy_check="ssh -O check callahan-proxy"
 alias proxy_off="ssh -O exit callahan-proxy"
+
+eval `keychain --eval --agents ssh id_rsa active/current-internal active/current-external active/current-deployed`

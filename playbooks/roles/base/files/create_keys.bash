@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -ex
 internal=`whoami`-internal-`date +%Y-%m-%d`
 echo "Generating internal key... $internal"

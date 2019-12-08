@@ -1,4 +1,4 @@
-P4CLIENT=rblaffor-{{ ansible_hostname }}
+P4CLIENT={{ lookup('env','USER') }}-{{ ansible_hostname }}
 P4EDITOR=/usr/bin/emacs
 P4PORT=rsh:ssh -2 -a -l p4source -q -x p4.source.akamai.com /bin/true
-P4USER=rblaffor
+P4USER={{ lookup('env','USER') }}
