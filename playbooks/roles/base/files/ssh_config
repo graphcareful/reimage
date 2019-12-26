@@ -20,8 +20,45 @@ HostName git.source.akamai.com
 ProxyCommand socat - SOCKS4A:localhost:%h:%p,socksport=8888
 User rblaffor
 
-Host dcp-ci-1
-Hostname 198.18.133.46
-User root
-HostKeyAlgorithms ssh-dss
+Host desktop
+HostName nyc-lp1g9.145bw.corp.akamai.com
+User rblaffor
 
+Host desktop-proxy
+HostName nyc-lp1g9.145bw.corp.akamai.com
+ProxyCommand socat - SOCKS4A:localhost:%h:%p,socksport=8888
+User rblaffor
+
+Host dcp-ci-1
+HostName 198-18-133-46-CI.ci.deca.mqtt-be.nss1.tn.akamai.com
+ProxyCommand socat - SOCKS4A:localhost:%h:%p,socksport=8888
+User root
+
+Host si-desktop
+Hostname si-desktop.ddns.net
+User robert
+
+Host *.ddns.net
+       IdentitiesOnly=yes
+Host *.akamai.com
+       HostKeyAlgorithms +ssh-dss
+Host *.akamaitechnologies.com
+       HostKeyAlgorithms +ssh-dss
+Host *.akamai.com
+       HostKeyAlgorithms +ssh-dss
+Host *.akamaitechnologies.com
+       HostKeyAlgorithms +ssh-dss
+Host *
+       HostKeyAlgorithms +ssh-dss
+Host *.akamai.com
+       HostKeyAlgorithms +ssh-dss
+Host *.akamaitechnologies.com
+       HostKeyAlgorithms +ssh-dss
+Host *
+       HostKeyAlgorithms +ssh-dss
+Host *.akamai.com
+       HostKeyAlgorithms +ssh-dss
+Host *.akamaitechnologies.com
+       HostKeyAlgorithms +ssh-dss
+Host *
+       HostKeyAlgorithms +ssh-dss
