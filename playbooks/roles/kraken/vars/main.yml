@@ -1,4 +1,0 @@
----
-kraken_usb_version: '2433:b200'
-kraken_dir: '{{ workspace_dir }}/levd'
-build_dir: '{{ kraken_dir }}/build'
