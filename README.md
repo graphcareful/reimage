@@ -121,5 +121,5 @@ sudo pip install pex
 # 1. Package
 pex . -r requirements.txt -v -m reimage.reimage:main -o reimage.pex 
 # 2. Run
-./reimage.pex -c configs/reimage.cfg
+./reimage.pex -c configs/reimage.cfg load
 ```
