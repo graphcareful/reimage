@@ -1,1 +1,6 @@
 .reborn
+__pycache__
+reimage.tar.gz
+reimage.pex
+reimage.run
+reimage_data.tar.gz

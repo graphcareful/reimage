@@ -1,7 +1,0 @@
----
-roles_dir: '{{ inventory_dir }}/playbooks/roles'
-reborn_cache_dir: '{{ inventory_dir }}/.reborn'
-workspace_dir: '{{ ansible_env.HOME }}/workspace'
-ansible_python_interpreter: /usr/bin/python3
-
-

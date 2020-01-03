@@ -1,9 +1,0 @@
----
-
-- name: Check if emacs at version exists
-  shell: "emacs --version | grep 'GNU Emacs' | head -n1 | awk '{print $3}'"
-  register: local_emacs_version
-
-- include: emacs.yml
-  when: local_emacs_version.stdout != emacs_version
-
