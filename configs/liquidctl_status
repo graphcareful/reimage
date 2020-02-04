@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# ➜  ~ sudo liquidctl status
+# NZXT Smart Device V2 (experimental)
+# ├── Fan 2 duty       50  %
+# ├── Fan 2 speed    1160  rpm
+# ├── Fan 3 duty       50  %
+# ├── Fan 3 speed    1190  rpm
+# └── Noise level      54  dB
+
+# NZXT Kraken X (X42, X52, X62 or X72)
+# ├── Liquid temperature     27.1  °C
+# ├── Fan speed               856  rpm
+# ├── Pump speed             2070  rpm
+# └── Firmware version      6.0.2
+
+# Default behavior is to print to stdout, otherwise will write to file
+output=$1
+liquid_ctl_status_file="${HOME}/.liquid_ctl_status"
+
+if [ "${output}" == "" ]; then
+    output=/dev/stdout
+else
+    output="${liquid_ctl_status_file}"
+fi
+
+# Infinite loop, queries the liquidctl status, writes to file or /dev/stdout, then sleeps
+while true; do
+    # /etc/sudoers edited to have this work without entering password
+    status=$(sudo liquidctl status)
+
+    # Smart device current fan speed values
+    fan1=$(echo "${status}" | grep 'Fan 1 speed' | awk '{print $5}')
+    fan2=$(echo "${status}" | grep 'Fan 2 speed' | awk '{print $5}')
+    fan3=$(echo "${status}" | grep 'Fan 3 speed' | awk '{print $5}')
+
+    # Kraken X pump/fan speed values
+    fan_speed=$(echo "$status" | grep 'Fan speed' | awk '{print $4}')
+    pump_speed=$(echo "$status" | grep 'Pump speed' | awk '{print $4}')
+    liquid_temp=$(echo "$status" | grep 'Liquid temperature' | awk '{print $4}')
+    firmware_version=$(echo "$status" | grep 'Firmware version' | awk '{print $4}')
+
+    # Delete file if it already exists
+    if [ -f "${liquid_ctl_status_file}" ]; then
+        rm "${liquid_ctl_status_file}"
+	      touch "${liquid_ctl_status_file}"
+	      chmod 777 "${liquid_ctl_status_file}"
+    fi
+
+    # Write values to either file or stdout
+    echo "Fan1: ${fan1} RPM" >> "${output}"
+    echo "Fan2: ${fan2} RPM" >> "${output}"
+    echo "Fan3: ${fan3} RPM" >> "${output}"
+    echo "Kraken Fan Speed: ${fan_speed} RPM" >> "${output}"
+    echo "Kraken Pump Speed: ${pump_speed} RPM" >> "${output}"
+    echo "Kraken Liquid Temperature: ${liquid_temp} °C" >> "${output}"
+    echo "Kraken Firmware version: ${firmware_version}" >> "${output}"
+
+    sleep 3
+done

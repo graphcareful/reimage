@@ -1,0 +1,10 @@
+[Unit]
+Description=liquidctl service status queryer
+
+[Service]
+Type=service
+ExecStart=/usr/local/bin/liquidctl_status 1
+Environment=HOME=/home/robert
+
+[Install]
+WantedBy=default.target
