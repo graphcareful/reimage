@@ -1,0 +1,27 @@
+{
+    "programs" : [
+        { "name": "emacs", "version": "28" },
+        { "name": "conky", "version": "1.11.6_pre" },
+        { "name": "resume", "install_on": ["nvidia_gpu"] },
+        { "name": "grub_theme", "install_on": ["desktop"] }
+    ],
+
+    "files" : [
+        { "from": "spacemacs", "to": "~/.spacemacs" },
+        { "from": "conkyrc", "to": "/etc/conky/conkyrc" },
+        { "from": "ssh_config", "to": "~/.ssh/config" },
+        {
+            "from": "test",
+            "to": "~/.ssh/config"
+        }
+    ],
+
+    "classes" : ["laptop", "desktop", "nvidia_gpu"],
+
+    "systems" : {
+        "workstation" : ["desktop", "nvidia_gpu"],
+        "p53-laptop" : ["laptop", "nvidia_gpu"],
+        "x1c-laptop" : ["laptop"],
+        "workstation-co" : ["desktop", "nvidia_gpu"]
+    }
+}
