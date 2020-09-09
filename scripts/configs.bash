@@ -38,13 +38,17 @@ function itr_configs {
                 fi
                 echo "Creating directory $(dirname $to)"
             fi
-            # cp "${from}" "${to}"
+            cp "${from}" "${to}"
             echo "Copying file '${from}' to '${to}'"
         elif [ "${action}" == "load" ]; then
             if [ ! -f "${from}" ]; then
                 echo "Warning: Source file missing: ${from}"
             fi
-            # cp "${to}" "${root}/files/${from}"
+            if [ "${from}" = /* ]; then
+                sudo cp "${to}" "${root}/files/${from}"
+            else
+                cp "${to}" "${root}/files/${from}"
+            fi
             echo "Copying file '${to}' to '${root}/files/${from}'"
         else
             echo "Unsupported itr_config action, either 'unload' or 'load"
