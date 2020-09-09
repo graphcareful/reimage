@@ -36,7 +36,8 @@ sudo dnf install -y \
      automake \
      gcc \
      gcc-c++ \
-     kernel-devel
+     kernel-devel \
+     cmake
 
 install_ppl
 install_theme

@@ -59,7 +59,7 @@ function build_and_install_emacs {
     echo "Building emacs"
     ./autogen.sh
     ./configure --with-nativecomp --with-mailutils --with-json --with-cairo --with-rsvg --with-modules
-    make -j$(nprocs)
+    make -j$(nproc)
     echo "Installing emacs"
     sudo make install
 }

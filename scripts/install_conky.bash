@@ -49,7 +49,8 @@ function build_and_install_conky {
     fi
     mkdir -p "${idir}/build"
     cd "${idir}/build"
-    make -j$(nprocs)
+    cmake ..
+    make -j$(nproc)
     sudo make install
 }
 
