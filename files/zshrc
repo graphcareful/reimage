@@ -74,6 +74,10 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# Disable gnome notifications unless a process takes more then 20 seconds
+# to complete
+# export AUTO_NOTIFY_THRESHOLD=20
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment

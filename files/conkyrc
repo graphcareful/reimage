@@ -98,7 +98,7 @@ ${voffset 2}${color1}17${goto 45}${color3}${cpu cpu17}%${goto 85}${color2}${cpub
 #------------+
 ${voffset 10}${color1}${font :size=14:bold}TEMPS ${hr 2}${font}
 ${voffset 5}${color1}CPU: ${color3}${execi 5 sensors | grep 'Package' | awk '{print $4}' | cut -d '°' -f 1 | cut -c 2-}°C$alignr${color1}NVME: ${color3}${execi 5 sensors | grep nvme-pci-0100 -A 2 | tail -n 1 | awk '{print $2}' | cut -d '°' -f 1 | cut -c 2-}°C
-${voffset 2}${color1}GPU: ${color3}${execi 5 nvidia-smi | sed -n '9p' | awk '{print $3}' | cut -d 'C' -f 1}°C$alignr${color1}SSD:${color3}${execi 5 hddtemp /dev/sda1 | cut -d ":" -f 3}
+${voffset 2}${color1}GPU: ${color3}${execi 5 nvidia-smi | sed -n '10p' | awk '{print $3}' | cut -d 'C' -f 1}°C$alignr${color1}SSD:${color3}${execi 5 hddtemp /dev/sda1 | cut -d ":" -f 3}
 ${voffset 2}${color1}MOBO: ${color3}${execi 10 sensors | grep 'Sensor 2' | awk '{print $3}' | cut -b 2-}${alignr}${color1}AIO Liquid: ${color3}${execi 3 grep "Water Temp" /etc/leviathan/conky_levd.updates | cut -d ":" -f 2 | cut -b 2-}°C
 #------------+
 # PROCESSES
