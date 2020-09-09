@@ -6,6 +6,10 @@ action="none"
 hostname=$(hostname)
 root=$(git rev-parse --show-toplevel)
 
+function install_script_deps {
+    sudo dnf install -y redhat-lsb-core jq
+}
+
 function help_msg {
     echo "reimage - install my programs and configs on a common OS"
     echo "Usage: ./install.bash -c (config_file) <file>"
@@ -89,6 +93,7 @@ function parse_cmd_args {
 }
 
 parse_cmd_args $@
+install_script_deps
 validate_input "$config"
 
 sysinfo=$(lsb_release -a)

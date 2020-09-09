@@ -45,7 +45,7 @@ Categories=System;Monitor;\" > /usr/local/share/applications/conky.desktop"
 function build_and_install_conky {
     local idir=$HOME/workspace/conky
     if [ ! -d "${idir}" ]; then
-        git clone git@github.com:brndnmtthws/conky.git "${idir}"
+        git clone https://github.com/brndnmtthws/conky.git "${idir}"
     fi
     mkdir -p "${idir}/build"
     cd "${idir}/build"

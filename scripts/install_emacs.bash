@@ -90,7 +90,7 @@ fi
 
 if [ "${install}" == "yes" ]; then
     if [ ! -d $HOME/workspace/emacs ]; then
-        git clone git@github.com:emacs-mirror/emacs.git $HOME/workspace/emacs
+        git clone https://github.com/emacs-mirror/emacs.git $HOME/workspace/emacs
     fi
     install_emacs_deps
     build_and_install_emacs
