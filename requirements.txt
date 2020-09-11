@@ -1,2 +1,0 @@
-requests==2.22.0
-distro==1.4.0

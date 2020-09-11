@@ -1,0 +1,6 @@
+Host *
+ServerAliveInterval 3
+
+Host router
+User root
+Hostname si-desktop.ddns.net
