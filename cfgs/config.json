@@ -10,10 +10,9 @@
         { "from": "spacemacs", "to": "~/.spacemacs" },
         { "from": "conkyrc", "to": "/etc/conky/conkyrc" },
         { "from": "ssh_config", "to": "~/.ssh/config" },
-        {
-            "from": "test",
-            "to": "~/.ssh/config"
-        }
+        { "from": "mu4e-setup.el", "to": "~/.mu4e-setup.el" },
+        { "from": "offlineimaprc", "to": "~/.offlineimaprc" },
+        { "from": "authinfo", "to": "~/.authinfo" }
     ],
 
     "classes" : ["laptop", "desktop", "nvidia_gpu"],

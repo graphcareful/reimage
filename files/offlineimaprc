@@ -1,0 +1,27 @@
+[general]
+accounts = Gmail
+maxsyncaccounts = 1
+
+[Account Gmail]
+localrepository = LocalGmail
+remoterepository = RepositoryGmail
+autorefresh = 5
+quick = 10
+postsynchook = mu index
+
+[Repository LocalGmail]
+type = Maildir
+localfolders = ~/Maildir/Gmail
+
+[Repository RepositoryGmail]
+type = Gmail
+maxconnections = 2
+remoteuser = rob@vectorized.io
+remotepass = <password>
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail', '[Gmail]/Important']
+sslcacertfile = /etc/pki/tls/cert.pem
+
+# These are effectively the same as the above
+[Account Exchange]
+[Repository LocalExchange]
+[Repository RemoteExchange]

@@ -51,6 +51,18 @@ function install_emacs_deps {
          harfbuzz-devel \
          libotf-devel \
          librsvg2-devel
+
+    # Email utilities
+    sudo dnf install -y \
+         maildir-utils \
+         gnutls-utils \
+         offlineimap
+
+    # Mu setup one time only
+    if [ ! -d /home/robert/Maildir ]; then
+        mu --init --my-address=rob@vectorized.io
+        mu mkdir /home/robert/Maildir/queue
+    fi
 }
 
 function build_and_install_emacs {
