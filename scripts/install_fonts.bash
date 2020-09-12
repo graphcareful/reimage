@@ -4,8 +4,6 @@
 # This isn't mean't to be a per system configuration, this is to be declared
 # as a 'base' package and run for all system types
 
-set -ex
-
 if [ ! -d $HOME/.fonts ]; then
     mkdir $HOME/.fonts
 fi

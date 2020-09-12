@@ -9,7 +9,6 @@
 # detected, unless a major vesion change is detected, in this case the user
 # is prompted before updating
 
-set -ex
 emacs_config=$1
 emacs_version=$(echo "${emacs_config}" | jq -r '.version')
 

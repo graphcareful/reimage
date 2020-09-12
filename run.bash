@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -ex
 config=""
 action="none"
 hostname=$(hostname)

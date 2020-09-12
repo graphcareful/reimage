@@ -8,8 +8,6 @@
 # ex: {"from":"spacemacs","to":"~/.spacemacs"}
 #     {"from":"conkyrc","to":"/etc/conky/conkyrc"}
 
-set -ex
-
 function config_files {
     local config=$1
     cfgs=$(cat "${config}" | jq -c -r '.files | .[]')
