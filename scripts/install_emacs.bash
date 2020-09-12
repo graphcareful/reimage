@@ -9,7 +9,6 @@
 # detected, unless a major vesion change is detected, in this case the user
 # is prompted before updating
 
-set -ex
 emacs_config=$1
 emacs_version=$(echo "${emacs_config}" | jq -r '.version')
 
@@ -60,7 +59,7 @@ function install_emacs_deps {
 
     # Mu setup one time only
     if [ ! -d /home/robert/Maildir ]; then
-        mu --init --my-address=rob@vectorized.io
+        mu init --my-address=rob@vectorized.io
         mu mkdir /home/robert/Maildir/queue
     fi
 }

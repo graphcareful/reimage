@@ -2,7 +2,6 @@
 # install_conky.bash
 #
 
-set -ex
 conky_config=$1
 conky_version=$(echo "${conky_config}" | jq -r '.version')
 

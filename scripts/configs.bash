@@ -8,8 +8,6 @@
 # ex: {"from":"spacemacs","to":"~/.spacemacs"}
 #     {"from":"conkyrc","to":"/etc/conky/conkyrc"}
 
-set -ex
-
 function config_files {
     local config=$1
     cfgs=$(cat "${config}" | jq -c -r '.files | .[]')
@@ -24,7 +22,12 @@ function itr_configs {
     local cfgs=$(config_files $config)
     for item in $cfgs; do
         local from="$root/files/$(echo ${item} | jq -r '.from')"
-        local to=$(echo "${item}" | jq -r '.to' | sed "s#^~#$HOME#")
+        local orig_to=$(echo "${item}" | jq -r '.to')
+        local to=$(echo "${orig_to}" | sed "s#^~#$HOME#")
+        local is_abs=false
+        if [[ $orig_to = /* ]]; then
+            is_abs=true
+        fi
         if [ "${action}" == "unload" ]; then
             if [ ! -f "${from}" ]; then
                 echo "Warning: Source file missing: ${from}, skipping"
@@ -38,18 +41,24 @@ function itr_configs {
                 fi
                 echo "Creating directory $(dirname $to)"
             fi
-            cp "${from}" "${to}"
-            echo "Copying file '${from}' to '${to}'"
+            cmd="cp ${from} ${to}"
+            if [ "${is_abs}" = true ]; then
+                cmd="sudo ${cmd}"
+            fi
+            if eval ${cmd}; then
+                echo "Copied file '${from}' to '${to}'"
+            fi
         elif [ "${action}" == "load" ]; then
             if [ ! -f "${from}" ]; then
                 echo "Warning: Source file missing: ${from}"
             fi
-            if [ "${from}" = /* ]; then
-                sudo cp "${to}" "${root}/files/${from}"
-            else
-                cp "${to}" "${root}/files/${from}"
+            cmd="cp ${to} ${from}"
+            if [ "${is_abs}" = true ]; then
+                cmd="sudo ${cmd}"
             fi
-            echo "Copying file '${to}' to '${root}/files/${from}'"
+            if eval ${cmd}; then
+                echo "Copied file '${to}' to '${from}'"
+            fi
         else
             echo "Unsupported itr_config action, either 'unload' or 'load"
             exit 1

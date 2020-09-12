@@ -1,5 +1,4 @@
 #!/bin/bash
-set -ex
 
 function install_ppl {
     if type "dnf list installed powerpanel" &> /dev/null; then

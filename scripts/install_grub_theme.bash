@@ -1,5 +1,4 @@
 #!/bin/bash
-set -ex
 
 if [ ! "grep GRUB_THEME= /etc/default/grub" &> /dev/null ]; then
     if [ ! -d $HOME/workspace/grub2-themes ]; then

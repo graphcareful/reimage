@@ -1,5 +1,4 @@
 #!/bin/bash
-set -ex
 
 # For sleep/hibernate
 echo 'add_dracutmodules+=" resume "' > /etc/dracut.conf.d/resume.conf
