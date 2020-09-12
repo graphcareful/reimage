@@ -2,5 +2,21 @@ Host *
 ServerAliveInterval 3
 
 Host router
-User root
 Hostname si-desktop.ddns.net
+User root
+
+Host desktop
+HostName workstation.fios-router.home
+User robert
+ProxyJump router
+DynamicForward 8888
+ControlMaster auto
+ControlPath ~/.ssh/sockets/%r@%h:%p
+
+# Host git.source.akamai.com
+# HostName git.source.akamai.com
+# ProxyCommand socat - SOCKS4A:localhost:%h:%p,socksport=8888
+# User robert
+
+Host *
+       HostKeyAlgorithms +ssh-dss
