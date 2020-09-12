@@ -59,7 +59,7 @@ function install_emacs_deps {
 
     # Mu setup one time only
     if [ ! -d /home/robert/Maildir ]; then
-        mu --init --my-address=rob@vectorized.io
+        mu init --my-address=rob@vectorized.io
         mu mkdir /home/robert/Maildir/queue
     fi
 }
