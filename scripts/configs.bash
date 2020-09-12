@@ -41,7 +41,11 @@ function itr_configs {
                 fi
                 echo "Creating directory $(dirname $to)"
             fi
-            if cp "${from}" "${to}"; then
+            cmd="cp ${from} ${to}"
+            if [ "${is_abs}" = true ]; then
+                cmd="sudo ${cmd}"
+            fi
+            if eval ${cmd}; then
                 echo "Copied file '${from}' to '${to}'"
             fi
         elif [ "${action}" == "load" ]; then
