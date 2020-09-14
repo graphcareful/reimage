@@ -22,7 +22,7 @@ Firstly set a unique hostname for the new machine, if you already haven't, then 
 ```
 ➜  reimage git:(feature/f32) ✗ ./run.bash -h
 reimage - install my programs and configs on a common OS
-Usage: ./install.bash -c (config_file) <file>
+Usage: ./run.bash -c (config_file) <file>
 Optional args:
 -u (unload)  Take locally edited config files and cp them into ./files
 -l (load)   Take config files in ./files and cp them onto the system
@@ -55,11 +55,7 @@ A configuration file will look like the following:
     "files" : [
         { "from": "spacemacs", "to": "~/.spacemacs" },
         { "from": "conkyrc", "to": "/etc/conky/conkyrc" },
-        { "from": "ssh_config", "to": "~/.ssh/config" },
-        {
-            "from": "test",
-            "to": "~/.ssh/config"
-        }
+        { "from": "ssh_config", "to": "~/.ssh/config" }
     ],
 
     "classes" : ["laptop", "desktop", "nvidia_gpu"],
