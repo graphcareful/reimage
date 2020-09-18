@@ -35,36 +35,47 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     (auto-completion :variables
-                      company-minimum-prefix-length 1
-                      auto-completion-use-company-box t)
-     (typescript :variables
-                 typescript-backend 'lsp)
-     (ivy :variables
+     (auto-completion
+        :variables
+          company-minimum-prefix-length 1
+          auto-completion-use-company-box t)
+     (typescript
+        :variables
+          typescript-backend 'lsp)
+     (ivy
+        :variables
           ivy-wrap t
           ivy-enable-advanced-buffer-information t)
-     (mu4e :variables
-           mu4e-enable-async-operations t
-           mu4e-enable-notifications t
-           mu4e-enable-mode-line t
-           mu4e-use-maildirs-extension t
-           mu4e-installation-path "/usr/share/emacs/site-lisp/mu4e")
-     (python :variables
-             python-enable-yapf-format-on-save t
-             python-backend 'lsp
-             python-formatter 'yapf
-             python-lsp-server 'mspyls)
+     (mu4e
+        :variables
+          mu4e-enable-async-operations t
+          mu4e-enable-notifications t
+          mu4e-enable-mode-line t
+          mu4e-use-maildirs-extension t
+          mu4e-installation-path "/usr/share/emacs/site-lisp/mu4e")
+     (python
+        :variables
+          python-enable-yapf-format-on-save t
+          python-backend 'lsp
+          python-formatter 'yapf
+          python-lsp-server 'mspyls)
      lua
      yaml
      javascript
      better-defaults
      emacs-lisp
-     (cmake :variables cmake-enable-cmake-ide-support nil)
-     (shell-scripts :variables shell-scripts-backend 'lsp)
-     (shell :variables
-            shell-default-shell 'vterm
-            shell-default-position 'bottom)
-     (lsp :variables
+     (cmake
+        :variables
+          cmake-enable-cmake-ide-support nil)
+     (shell-scripts
+        :variables
+          shell-scripts-backend 'lsp)
+     (shell
+        :variables
+          shell-default-shell 'vterm
+          shell-default-position 'bottom)
+     (lsp
+        :variables
           lsp-clients-clangd-args '("-pch-storage=disk" "-background-index=false" "-log=info" "-pretty" "-resource-dir=/home/robert/workspace/v/build/llvm/llvm-bin/lib/clang/10.0.0")
           lsp-clients-clangd-executable "/home/robert/workspace/v/build/llvm/llvm-bin/bin/clangd"
           lsp-completion-provider 'capf
@@ -80,21 +91,23 @@ values."
           lsp-ui-doc-enable nil
           lsp-restart 'auto-restart
           lsp-prefer-flymake nil)
-     (c-c++ :variables
-            helm-make-nproc 0
-            c-c++-enable-clang-format-on-save t
-            c-c++-enable-google-style t
-            c-c++-enable-clang-support t
-            c-c++-default-mode-for-headers 'c++-mode
-            c-c++-backend 'lsp-clangd
-            c-c++-adopt-subprojects t
-            c-c++-lsp-sem-highlight-rainbow t)
+     (c-c++
+        :variables
+          helm-make-nproc 0
+          c-c++-enable-clang-format-on-save t
+          c-c++-enable-google-style t
+          c-c++-enable-clang-support t
+          c-c++-default-mode-for-headers 'c++-mode
+          c-c++-backend 'lsp-clangd
+          c-c++-adopt-subprojects t
+          c-c++-lsp-sem-highlight-rainbow t)
      git
      markdown
-     (treemacs :variables
-               treemacs-use-follow-mode t
-               treemacs-use-all-the-icons-theme t
-               treemacs-use-filewatch-mode t)
+     (treemacs
+        :variables
+          treemacs-use-follow-mode t
+          treemacs-use-all-the-icons-theme t
+          treemacs-use-filewatch-mode t)
      syntax-checking
      version-control
      )
@@ -384,6 +397,8 @@ you should place your code here."
                      (lambda (cand) (get-buffer cand)))
                    )
         )
+  ;; ivy-rich must be restarted after the above edit to
+  ;; ivy-rich-display-transformers-list is made
   (ivy-rich-mode 0)
   (ivy-rich-mode 1)
 )
