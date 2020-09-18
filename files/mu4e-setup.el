@@ -15,6 +15,8 @@
 ;; the maildirs you use frequently; access them with 'j' ('jump')
 (setq mu4e-maildir-shortcuts
       '((:maildir "/Gmail/inbox"             :key ?i)
+        (:maildir "/Gmail/v-dev"             :key ?v)
+        (:maildir "/Gmail/v-dev.me"          :key ?m)
         (:maildir "/Gmail/[Gmail].Sent Mail" :key ?s)))
 
 ;; the headers to show in the headers list -- a pair of a field
