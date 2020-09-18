@@ -30,15 +30,19 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(typescript
-     ;; ----------------------------------------------------------------
+   '(;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      (auto-completion :variables
+                      company-minimum-prefix-length 1
                       auto-completion-use-company-box t)
-     ivy
+     (typescript :variables
+                 typescript-backend 'lsp)
+     (ivy :variables
+          ivy-wrap t
+          ivy-enable-advanced-buffer-information t)
      (mu4e :variables
            mu4e-enable-async-operations t
            mu4e-enable-notifications t
@@ -64,7 +68,17 @@ values."
           lsp-clients-clangd-args '("-pch-storage=disk" "-background-index=false" "-log=info" "-pretty" "-resource-dir=/home/robert/workspace/v/build/llvm/llvm-bin/lib/clang/10.0.0")
           lsp-clients-clangd-executable "/home/robert/workspace/v/build/llvm/llvm-bin/bin/clangd"
           lsp-completion-provider 'capf
+          lsp-log-io nil
+          lsp-diagnostic-package nil
+          lsp-headerline-breadcrumb-enable t
+          lsp-modeline-code-actions-segments '(count icon name)
+          lsp-enable-folding nil
+          lsp-enable-snippet nil
+          lsp-enable-links nil
+          lsp-enable-completion-at-point t
+          lsp-enable-on-type-formatting nil
           lsp-ui-doc-enable nil
+          lsp-restart 'auto-restart
           lsp-prefer-flymake nil)
      (c-c++ :variables
             helm-make-nproc 0
@@ -163,9 +177,9 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(underwater
+                         spacemacs-light
                          fogus
-                         spacemacs-dark
-                         spacemacs-light)
+                         spacemacs-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -335,6 +349,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   )
 
+(defun ivy-rich-switch-buffer-icon (candidate)
+  (with-current-buffer
+      (get-buffer candidate)
+    (let ((icon (all-the-icons-icon-for-mode major-mode)))
+      (if (symbolp icon)
+          (all-the-icons-icon-for-mode 'fundamental-mode)
+        icon))))
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -342,10 +364,28 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (lsp-treemacs-sync-mode 1)
   (defun my-c++-mode-hook ()
     (setq c-basic-offset 4))
   (add-hook 'c++-mode-hook 'my-c++-mode-hook)
   (load "~/.mu4e-setup.el")
+  (setq ivy-rich-display-transformers-list
+        (plist-put ivy-rich-display-transformers-list
+                  'ivy-switch-buffer
+                   '(:columns
+                     ((ivy-rich-switch-buffer-icon (:width 2))
+                      (ivy-rich-candidate (:width 30))
+                      (ivy-rich-switch-buffer-size (:width 7))
+                      (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+                      (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+                      (ivy-rich-switch-buffer-project (:width 15 :face success))
+                      (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
+                     :predicate
+                     (lambda (cand) (get-buffer cand)))
+                   )
+        )
+  (ivy-rich-mode 0)
+  (ivy-rich-mode 1)
 )
 
 
@@ -361,6 +401,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(custom-safe-themes
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" default))
  '(evil-want-Y-yank-to-eol nil)
  '(hl-todo-keyword-faces
    '(("TODO" . "#dc752f")
@@ -379,7 +421,7 @@ This function is called at the very end of Spacemacs initialization."
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f")))
  '(package-selected-packages
-   '(moonscript web-mode tide typescript-mode import-js grizzl emmet-mode add-node-modules-path yaml-mode company-lua lua-mode company-box insert-shebang flycheck-bashate fish-mode company-shell yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent helm-pydoc helm-gtags helm-cscope helm xcscope helm-core ggtags cython-mode counsel-gtags company-anaconda blacken anaconda-mode pythonic cmake-mode cmake-ide levenshtein helm-rg tern dap-mode posframe bui underwater-theme yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org terminal-here symon symbol-overlay sublime-themes string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs rainbow-delimiters prettier-js popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nodejs-repl nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-treemacs lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-purpose helm-projectile helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ gh-md fuzzy font-lock+ flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav editorconfig dumb-jump dotenv-mode disaster diminish devdocs define-word cpp-auto-include company-ycmd company-rtags company-c-headers column-enforce-mode clean-aindent-mode centered-cursor-mode ccls browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell))
+   '(company-lsp moonscript web-mode tide typescript-mode import-js grizzl emmet-mode add-node-modules-path yaml-mode company-lua lua-mode company-box insert-shebang flycheck-bashate fish-mode company-shell yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent helm-pydoc helm-gtags helm-cscope helm xcscope helm-core ggtags cython-mode counsel-gtags company-anaconda blacken anaconda-mode pythonic cmake-mode cmake-ide levenshtein helm-rg tern dap-mode posframe bui underwater-theme yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org terminal-here symon symbol-overlay sublime-themes string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs rainbow-delimiters prettier-js popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nodejs-repl nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-treemacs lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-purpose helm-projectile helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ gh-md fuzzy font-lock+ flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav editorconfig dumb-jump dotenv-mode disaster diminish devdocs define-word cpp-auto-include company-ycmd company-rtags company-c-headers column-enforce-mode clean-aindent-mode centered-cursor-mode ccls browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(safe-local-variable-values
    '((helm-make-build-dir . "build/debug/clang")
@@ -388,9 +430,15 @@ This function is called at the very end of Spacemacs initialization."
      (javascript-backend . tern)
      (javascript-backend . lsp))))
 (custom-set-faces
- '(company-tooltip-selection ((t (:background "steelblue" :foreground "white"))))
- '(company-tooltip ((t (:background "black"))))
- )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-scrollbar-bg ((t (:background "black"))))
+ '(company-scrollbar-fg ((t (:background "#2196f3"))))
+ '(company-tooltip ((t (:background "#2b303b"))))
+ ;;'(company-tooltip-common ((t (:background "#2196f3" :foreground "black"))))
+ '(company-tooltip-selection ((t (:background "#2196f3" :foreground "black")))))
 )
 
 
