@@ -39,18 +39,20 @@ sudo dnf install -y \
      cmake \
      zsh
 
-install_ppl
-install_theme
-
 if [ ! -d "$HOME/workspace" ]; then
     echo "Creating workspace dir..."
     mkdir $HOME/workspace
 fi
 if [ ! -d "$HOME/.emacs.d" ]; then
     git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    cd ~/.emacs.d
+    git checkout develop
+    cd $HOME
 fi
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -
 fi
 
+install_ppl
+install_theme
