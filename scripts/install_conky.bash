@@ -23,13 +23,13 @@ function uninstall_conky {
 
 function setup_conky_env {
     sudo bash -c "echo \"[Desktop Entry]
-=Application
+Type=Application
 Name=conky
 Exec=conky --daemonize --pause=1
 StartupNotify=false
 Terminal=false
 Icon=conky-logomark-violet
-Categories=System;Monitor;\" > /usr/local/share/applications/conky.desktop"
+Categories=System;Monitor;\" > /usr/share/applications/conky.desktop"
 
     if [ ! -d /etc/conky ]; then
         sudo mkdir -p /etc/conky
