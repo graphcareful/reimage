@@ -40,7 +40,8 @@ sudo dnf install -y \
      zsh \
      ripgrep \
      lm_sensors \
-     hddtemp
+     hddtemp \
+     htop 
 
 if [ ! -d "$HOME/workspace" ]; then
     echo "Creating workspace dir..."
