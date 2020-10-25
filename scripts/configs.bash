@@ -14,6 +14,23 @@ function config_files {
     echo "${cfgs}"
 }
 
+function copy {
+    local from=$1
+    local to=$2
+    local permissions=$3
+    local is_root=$(ls -ld "${to}" | awk '{print $3}')
+    cmd="cp ${from} ${to}"
+    if [ "${is_root}" == "root" ]; then
+        cmd="sudo ${cmd}"
+    fi
+    if eval ${cmd}; then
+        echo "Copied file '${from}' to '${to}'"
+    fi
+    if [ "${permissions}" != "null" ]; then
+        sudo chmod "${permissions}" "${to}"
+    fi
+}
+
 # Iterate over the from/to json object tuple, either copying file onto system
 # or copying the file locally into ./file from the system, depending on param 2 switch
 function itr_configs {
@@ -23,11 +40,8 @@ function itr_configs {
     for item in $cfgs; do
         local from="$root/files/$(echo ${item} | jq -r '.from')"
         local orig_to=$(echo "${item}" | jq -r '.to')
+        local permissions=$(echo "${item}" | jq -r '.permissions')
         local to=$(echo "${orig_to}" | sed "s#^~#$HOME#")
-        local is_abs=false
-        if [[ $orig_to = /* ]]; then
-            is_abs=true
-        fi
         if [ "${action}" == "unload" ]; then
             if [ ! -f "${from}" ]; then
                 echo "Warning: Source file missing: ${from}, skipping"
@@ -41,24 +55,12 @@ function itr_configs {
                 fi
                 echo "Creating directory $(dirname $to)"
             fi
-            cmd="cp ${from} ${to}"
-            if [ "${is_abs}" = true ]; then
-                cmd="sudo ${cmd}"
-            fi
-            if eval ${cmd}; then
-                echo "Copied file '${from}' to '${to}'"
-            fi
+            copy "${from}" "${to}" "${permissions}"
         elif [ "${action}" == "load" ]; then
             if [ ! -f "${from}" ]; then
                 echo "Warning: Source file missing: ${from}"
             fi
-            cmd="cp ${to} ${from}"
-            if [ "${is_abs}" = true ]; then
-                cmd="sudo ${cmd}"
-            fi
-            if eval ${cmd}; then
-                echo "Copied file '${to}' to '${from}'"
-            fi
+            copy "${to}" "${from}" "${permissions}"
         else
             echo "Unsupported itr_config action, either 'unload' or 'load"
             exit 1

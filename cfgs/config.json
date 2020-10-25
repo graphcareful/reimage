@@ -10,7 +10,7 @@
     "files" : [
         { "from": "spacemacs", "to": "~/.spacemacs" },
         { "from": "conkyrc", "to": "/etc/conky/conkyrc" },
-        { "from": "ssh_config", "to": "~/.ssh/config" },
+        { "from": "ssh_config", "to": "~/.ssh/config", "permissions": 600 },
         { "from": "mu4e-setup.el", "to": "~/.mu4e-setup.el" },
         { "from": "offlineimaprc", "to": "~/.offlineimaprc" },
         { "from": "authinfo", "to": "~/.authinfo" },
