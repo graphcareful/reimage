@@ -38,7 +38,9 @@ sudo dnf install -y \
      kernel-devel \
      cmake \
      zsh \
-     ripgrep
+     ripgrep \
+     lm_sensors \
+     hddtemp
 
 if [ ! -d "$HOME/workspace" ]; then
     echo "Creating workspace dir..."
