@@ -49,7 +49,7 @@ if [ ! -d "$HOME/workspace" ]; then
 fi
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
 install_ppl
