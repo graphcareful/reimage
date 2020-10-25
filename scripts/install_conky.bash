@@ -29,7 +29,8 @@ Exec=conky --daemonize --pause=1
 StartupNotify=false
 Terminal=false
 Icon=conky-logomark-violet
-Categories=System;Monitor;\" > /usr/share/applications/conky.desktop"
+Categories=System;Monitor;\" > /usr/local/share/applications/conky.desktop"
+    sudo chmod 644 /usr/local/share/applications/conky.desktop
 
     if [ ! -d /etc/conky ]; then
         sudo mkdir -p /etc/conky
