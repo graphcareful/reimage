@@ -57,6 +57,11 @@ function install_emacs_deps {
          gnutls-utils \
          offlineimap
 
+    # Language server goodies
+    sudo npm install -g vscode-json-languageserver
+    sudo pip install cmake-language-server
+
+
     # Mu setup one time only
     if [ ! -d /home/robert/Maildir ]; then
         mu init --my-address=rob@vectorized.io
