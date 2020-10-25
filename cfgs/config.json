@@ -3,7 +3,8 @@
         { "name": "emacs", "version": "28" },
         { "name": "conky", "version": "1.11.6_pre" },
         { "name": "resume", "install_on": ["nvidia_gpu"] },
-        { "name": "grub_theme", "install_on": ["desktop"] }
+        { "name": "grub_theme", "install_on": ["desktop"] },
+        { "name": "liquidctl", "install_on": ["watercool"] }
     ],
 
     "files" : [
@@ -15,12 +16,11 @@
         { "from": "authinfo", "to": "~/.authinfo" }
     ],
 
-    "classes" : ["laptop", "desktop", "nvidia_gpu"],
+    "classes" : ["laptop", "desktop", "nvidia_gpu", "watercool"],
 
     "systems" : {
-        "workstation" : ["desktop", "nvidia_gpu"],
+        "workstation" : ["desktop", "nvidia_gpu", "watercool"],
         "p53-laptop" : ["laptop", "nvidia_gpu"],
-        "x1c-laptop" : ["laptop"],
-        "workstation-co" : ["desktop", "nvidia_gpu"]
+        "x1c-laptop" : ["laptop"]
     }
 }
