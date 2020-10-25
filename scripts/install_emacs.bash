@@ -105,4 +105,11 @@ if [ "${install}" == "yes" ]; then
     fi
     install_emacs_deps
     build_and_install_emacs
+    if [ ! -d $HOME/.emacs ]; then
+        git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
+        cd $HOME/.emacs.d
+        git checkout develop
+        cd $HOME/.emacs/.d/private/local
+        git clone git@github.com:seanfarley/mu4e-patch.git
+    fi
 fi
