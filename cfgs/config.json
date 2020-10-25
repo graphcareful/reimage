@@ -13,7 +13,9 @@
         { "from": "ssh_config", "to": "~/.ssh/config" },
         { "from": "mu4e-setup.el", "to": "~/.mu4e-setup.el" },
         { "from": "offlineimaprc", "to": "~/.offlineimaprc" },
-        { "from": "authinfo", "to": "~/.authinfo" }
+        { "from": "authinfo", "to": "~/.authinfo" },
+        { "from": "tmux.agnoster-theme", "to": "~/.tmux.agnoster-theme" },
+        { "from": "tmux.conf", "to": "~/.tmux.conf" }
     ],
 
     "classes" : ["laptop", "desktop", "nvidia_gpu", "watercool"],
