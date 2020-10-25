@@ -37,7 +37,8 @@ sudo dnf install -y \
      gcc-c++ \
      kernel-devel \
      cmake \
-     zsh
+     zsh \
+     ripgrep
 
 if [ ! -d "$HOME/workspace" ]; then
     echo "Creating workspace dir..."
