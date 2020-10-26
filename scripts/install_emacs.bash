@@ -58,6 +58,7 @@ function install_emacs_deps {
          offlineimap
 
     # Language server goodies
+    sudo dnf install npm
     sudo npm install -g vscode-json-languageserver
     sudo pip install cmake-language-server
 
