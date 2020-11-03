@@ -13,8 +13,8 @@ function help_msg {
     echo "reimage - install my programs and configs on a common OS"
     echo "Usage: ./install.bash -c (config_file) <file>"
     echo "Optional args:"
-    echo "-u (unload)  Take locally edited config files and cp them into ./files"
-    echo "-l (load)   Take config files in ./files and cp them onto the system"
+    echo "-u (unload) Take config files in ./files and cp them onto the system"
+    echo "-l (load) Take locally edited config files and cp them into ./files"
     echo "For more information check out the README"
     echo ""
 }
