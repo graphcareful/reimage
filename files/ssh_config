@@ -20,3 +20,5 @@ ControlPath ~/.ssh/sockets/%r@%h:%p
 
 Host *
        HostKeyAlgorithms +ssh-dss
+
+
