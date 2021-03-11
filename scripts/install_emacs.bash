@@ -58,9 +58,9 @@ function install_emacs_deps {
          offlineimap
 
     # Language server goodies
-    sudo dnf install npm
-    sudo npm install -g vscode-json-languageserver
-    sudo pip install cmake-language-server
+    sudo dnf install npm ShellCheck
+    sudo npm install -g vscode-json-languageserver bash-language-server
+    sudo pip install cmake-language-server bashate
 
 
     # Mu setup one time only
