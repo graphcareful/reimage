@@ -1,28 +1,25 @@
 {
-    "programs" : [
-        { "name": "emacs", "version": "28" },
-        { "name": "conky", "version": "1.11.6_pre" },
-        { "name": "resume", "install_on": ["nvidia_gpu"] },
-        { "name": "grub_theme", "install_on": ["desktop"] },
-        { "name": "liquidctl", "install_on": ["watercool"] }
-    ],
+  "programs": [
+    { "name": "emacs", "version": "28" },
+    { "name": "conky", "version": "1.11.6_pre" },
+    { "name": "resume", "install_on": ["nvidia_gpu"] },
+    { "name": "grub_theme", "install_on": ["desktop"] },
+    { "name": "liquidctl", "install_on": ["watercool"] }
+  ],
 
-    "files" : [
-        { "from": "spacemacs", "to": "~/.spacemacs" },
-        { "from": "conkyrc", "to": "/etc/conky/conkyrc" },
-        { "from": "ssh_config", "to": "~/.ssh/config", "permissions": 600 },
-        { "from": "mu4e-setup.el", "to": "~/.mu4e-setup.el" },
-        { "from": "offlineimaprc", "to": "~/.offlineimaprc" },
-        { "from": "authinfo", "to": "~/.authinfo" },
-        { "from": "tmux.agnoster-theme", "to": "~/.tmux.agnoster-theme" },
-        { "from": "tmux.conf", "to": "~/.tmux.conf" }
-    ],
+  "files": [
+    { "from": "spacemacs", "to": "~/.spacemacs" },
+    { "from": "conkyrc", "to": "/etc/conky/conkyrc" },
+    { "from": "ssh_config", "to": "~/.ssh/config", "permissions": 600 },
+    { "from": "tmux.agnoster-theme", "to": "~/.tmux.agnoster-theme" },
+    { "from": "tmux.conf", "to": "~/.tmux.conf" }
+  ],
 
-    "classes" : ["laptop", "desktop", "nvidia_gpu", "watercool"],
+  "classes": ["laptop", "desktop", "nvidia_gpu", "watercool"],
 
-    "systems" : {
-        "workstation" : ["desktop", "nvidia_gpu", "watercool"],
-        "p53-laptop" : ["laptop", "nvidia_gpu"],
-        "x1c-laptop" : ["laptop"]
-    }
+  "systems": {
+    "workstation": ["desktop", "nvidia_gpu", "watercool"],
+    "p53-laptop": ["laptop", "nvidia_gpu"],
+    "x1c-laptop": ["laptop"]
+  }
 }
