@@ -32,7 +32,6 @@ values."
    dotspacemacs-configuration-layers
    '(ansible
      go
-     ocaml
      systemd
      docker
      ;; ----------------------------------------------------------------
@@ -54,8 +53,10 @@ values."
           ivy-wrap t
           ivy-enable-advanced-buffer-information t)
      (python
-        :variables
-          python-enable-yapf-format-on-save t
+      :variables
+			    python-sort-imports-on-save nil
+			    python-fill-column 79
+          python-format-on-save t
           python-backend 'lsp
           python-formatter 'yapf
           python-lsp-server 'mspyls)
@@ -73,8 +74,8 @@ values."
           shell-default-position 'bottom)
      (lsp
         :variables
-          lsp-clients-clangd-args '("-pch-storage=disk" "-background-index=false" "-log=info" "-pretty" "-resource-dir=/home/robert/workspace/redpanda/vbuild/llvm/llvm-bin/lib/clang/11.0.0")
-          lsp-clients-clangd-executable "/home/robert/workspace/redpanda/vbuild/llvm/llvm-bin/bin/clangd"
+          lsp-clients-clangd-args '("-pch-storage=disk" "-background-index=false" "-log=info" "-pretty" "-resource-dir=/home/robert/workspace/redpanda/vbuild/llvm/install/lib/clang/12.0.0")
+          lsp-clients-clangd-executable "/home/robert/workspace/redpanda/vbuild/llvm/install/bin/clangd"
           lsp-completion-provider 'capf
           lsp-log-io nil
           lsp-diagnostic-package nil
@@ -193,8 +194,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(ample
-                         spacemacs-dark
+   dotspacemacs-themes '(spacemacs-dark
+												 ample
                          molokai
                          underwater
                          spacemacs-light
@@ -389,29 +390,32 @@ you should place your code here."
   (defun my-c++-mode-hook ()
     (setq c-basic-offset 4))
   (add-hook 'c++-mode-hook 'my-c++-mode-hook)
-  (setq ivy-rich-display-transformers-list
-        (plist-put ivy-rich-display-transformers-list
-                  'ivy-switch-buffer
-                   '(:columns
-                     ((ivy-rich-switch-buffer-icon (:width 2))
-                      (ivy-rich-candidate (:width 30))
-                      (ivy-rich-switch-buffer-size (:width 7))
-                      (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
-                      (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
-                      (ivy-rich-switch-buffer-project (:width 15 :face success))
-                      (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
-                     :predicate
-                     (lambda (cand) (get-buffer cand)))
-                   )
-        )
+  (add-hook 'python-mode-hook
+	          (lambda ()
+		          (setq-default indent-tabs-mode t)
+		          (setq-default tab-width 2)
+		          (setq-default py-indent-tabs-mode t)
+	            (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+  ;; (setq ivy-rich-display-transformers-list
+  ;;       (plist-put ivy-rich-display-transformers-list
+  ;;                 'ivy-switch-buffer
+  ;;                  '(:columns
+  ;;                    ((ivy-rich-switch-buffer-icon (:width 2))
+  ;;                     (ivy-rich-candidate (:width 30))
+  ;;                     (ivy-rich-switch-buffer-size (:width 7))
+  ;;                     (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+  ;;                     (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+  ;;                     (ivy-rich-switch-buffer-project (:width 15 :face success))
+  ;;                     (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
+  ;;                    :predicate
+  ;;                    (lambda (cand) (get-buffer cand)))
+  ;;                  )
+  ;;       )
   ;; ivy-rich must be restarted after the above edit to
   ;; ivy-rich-display-transformers-list is made
   (ivy-rich-mode 0)
   (ivy-rich-mode 1)
 )
-
-
-
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -423,25 +427,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
- '(hl-todo-keyword-faces
-   '(("TODO" . "#dc752f")
-     ("NEXT" . "#dc752f")
-     ("THEM" . "#2d9574")
-     ("PROG" . "#4f97d7")
-     ("OKAY" . "#4f97d7")
-     ("DONT" . "#f2241f")
-     ("FAIL" . "#f2241f")
-     ("DONE" . "#86dc2f")
-     ("NOTE" . "#b1951d")
-     ("KLUDGE" . "#b1951d")
-     ("HACK" . "#b1951d")
-     ("TEMP" . "#b1951d")
-     ("FIXME" . "#dc752f")
-     ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f")))
  '(package-selected-packages
-   '(ample-theme yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key wgrep web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen utop use-package unfill undo-tree underwater-theme tuareg treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here systemd symon symbol-overlay sublime-themes string-inflection sphinx-doc spaceline-all-the-icons smex smeargle shell-pop restart-emacs rainbow-delimiters pytest pyenv-mode py-isort prettier-js popwin poetry pippel pipenv pip-requirements pcre2el password-generator paradox overseer org-superstar open-junk-file ocp-indent ocamlformat nodejs-repl nameless mwim multi-term move-text molokai-theme mmm-mode merlin-eldoc markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc jinja2-mode ivy-yasnippet ivy-xref ivy-rtags ivy-rich ivy-purpose ivy-hydra ivy-avy insert-shebang indent-guide importmagic hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate google-c-style golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ gh-md fuzzy forge font-lock+ flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-ocaml flycheck-elsa flycheck-bashate flx-ido fish-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav editorconfig dune dumb-jump dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish devdocs define-word dap-mode cython-mode cpp-auto-include counsel-projectile company-ycmd company-shell company-rtags company-lua company-go company-c-headers company-ansible company-anaconda column-enforce-mode cmake-mode clean-aindent-mode centered-cursor-mode ccls browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-compile async ansible-doc ansible aggressive-indent ace-link ac-ispell))
- '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
+   '(xcscope yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key wgrep web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen utop use-package unfill undo-tree underwater-theme tuareg treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-all-the-icons toc-org tide terminal-here systemd symon symbol-overlay sublime-themes string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle shell-pop restart-emacs rainbow-delimiters pytest pyenv-mode py-isort prettier-js popwin poetry pippel pipenv pip-requirements pcre2el password-generator paradox overseer org-superstar open-junk-file ocp-indent ocamlformat npm-mode nose nodejs-repl nameless mwim multi-term multi-line molokai-theme mmm-mode merlin-eldoc markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc jinja2-mode ivy-yasnippet ivy-xref ivy-rtags ivy-rich ivy-purpose ivy-hydra ivy-avy insert-shebang indent-guide importmagic hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate google-c-style golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ gh-md fuzzy forge font-lock+ flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-ocaml flycheck-elsa flycheck-bashate flx-ido fish-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav editorconfig dune dumb-jump drag-stuff dotenv-mode dockerfile-mode docker disaster dired-quick-sort diminish devdocs define-word dap-mode cython-mode cpp-auto-include counsel-projectile company-ycmd company-shell company-rtags company-lua company-go company-c-headers company-ansible company-anaconda column-enforce-mode cmake-mode clean-aindent-mode centered-cursor-mode ccls browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-compile async ansible-doc ansible ample-theme aggressive-indent ace-link ac-ispell))
  '(safe-local-variable-values
    '((helm-make-build-dir . "vbuild/debug/clang")
      (typescript-backend . tide)
@@ -450,7 +437,9 @@ This function is called at the very end of Spacemacs initialization."
      (javascript-backend . tern)
      (javascript-backend . lsp)
      (go-backend . go-mode)
-     (go-backend . lsp))))
+     (go-backend . lsp)))
+ '(warning-suppress-log-types '((comp) (comp)))
+ '(warning-suppress-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

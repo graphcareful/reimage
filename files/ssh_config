@@ -2,7 +2,7 @@ Host *
 ServerAliveInterval 3
 
 Host router
-Hostname si-desktop.ddns.net
+Hostname si-router.ddns.net
 User root
 
 Host desktop
@@ -20,5 +20,3 @@ ControlPath ~/.ssh/sockets/%r@%h:%p
 
 Host *
        HostKeyAlgorithms +ssh-dss
-
-
